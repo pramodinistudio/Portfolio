@@ -1,0 +1,1314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Pramodini Subramanya — Product Designer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@200;300;400;700;900&family=Syne:wght@300;400;500;600&family=Syne+Mono&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --black:#080706;
+  --off-black:#0e0d0b;
+  --dark:#161411;
+  --surface:#1e1b17;
+  --border:#2e2a24;
+  --gold:#d4a853;
+  --gold-light:#f0cc7a;
+  --gold-dim:rgba(212,168,83,0.12);
+  --white:#f8f4ee;
+  --white-dim:rgba(248,244,238,0.55);
+  --white-faint:rgba(248,244,238,0.12);
+  --accent:#e85d26;
+  --accent-dim:rgba(232,93,38,0.15);
+  --font-display:'Unbounded',sans-serif;
+  --font-body:'Syne',sans-serif;
+  --font-mono:'Syne Mono',monospace;
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{
+  font-family:var(--font-body);
+  background:var(--black);
+  color:var(--white);
+  line-height:1.6;
+  overflow-x:hidden;
+  cursor:none;
+}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+::selection{background:var(--gold);color:var(--black)}
+
+/* ---- CUSTOM CURSOR ---- */
+#cursor{
+  position:fixed;
+  width:12px;height:12px;
+  border-radius:50%;
+  background:var(--gold);
+  pointer-events:none;
+  z-index:9999;
+  transform:translate(-50%,-50%);
+  transition:transform 0.08s ease, width 0.25s ease, height 0.25s ease, background 0.25s ease, opacity 0.2s;
+  mix-blend-mode:difference;
+}
+#cursor-ring{
+  position:fixed;
+  width:36px;height:36px;
+  border-radius:50%;
+  border:1px solid rgba(212,168,83,0.5);
+  pointer-events:none;
+  z-index:9998;
+  transform:translate(-50%,-50%);
+  transition:transform 0.18s ease, width 0.3s ease, height 0.3s ease, opacity 0.3s;
+}
+body:has(a:hover) #cursor,
+body:has(button:hover) #cursor{
+  width:24px;height:24px;
+}
+body:has(a:hover) #cursor-ring,
+body:has(button:hover) #cursor-ring{
+  width:56px;height:56px;
+  border-color:var(--gold);
+}
+
+/* ---- NAV (new) ---- */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  display:grid;
+  grid-template-columns:1fr auto 1fr;
+  align-items:center;
+  padding:1.5rem 3rem;
+  transition:background 0.4s, backdrop-filter 0.4s;
+}
+nav.scrolled{
+  background:rgba(8,7,6,0.92);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+}
+.nav-left{display:flex;align-items:center;gap:0.75rem}
+.nav-avail{
+  display:flex;align-items:center;gap:0.5rem;
+  font-family:var(--font-mono);
+  font-size:0.6rem;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  color:rgba(80,200,120,0.9);
+}
+.nav-avail-dot{
+  width:6px;height:6px;
+  border-radius:50%;
+  background:rgba(80,200,120,0.9);
+  animation:pulse 2s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(0.7)}}
+.nav-wordmark{
+  font-family:var(--font-display);
+  font-size:0.9rem;
+  font-weight:700;
+  letter-spacing:0.06em;
+  text-transform:uppercase;
+  color:var(--white);
+  text-decoration:none;
+  text-align:center;
+}
+.nav-wordmark span{color:var(--gold)}
+.nav-right{
+  display:flex;align-items:center;justify-content:flex-end;
+  gap:2.5rem;
+  list-style:none;
+}
+.nav-right a{
+  font-family:var(--font-mono);
+  font-size:0.6rem;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:var(--white-dim);
+  transition:color 0.2s;
+}
+.nav-right a:hover{color:var(--gold)}
+.nav-cta-link{
+  padding:0.4rem 1.2rem;
+  border:1px solid rgba(212,168,83,0.4);
+  color:var(--gold) !important;
+  transition:background 0.2s, border-color 0.2s !important;
+}
+.nav-cta-link:hover{background:var(--gold-dim) !important;border-color:var(--gold) !important}
+
+/* ---- HERO (new) ---- */
+.hero{
+  min-height:100vh;
+  display:grid;
+  grid-template-rows:1fr auto auto 1fr;
+  padding:0;
+  position:relative;
+  overflow:hidden;
+}
+/* dot grid background */
+.hero::before{
+  content:'';
+  position:absolute;inset:0;
+  background-image:radial-gradient(circle, rgba(248,244,238,0.06) 1px, transparent 1px);
+  background-size:40px 40px;
+  pointer-events:none;
+}
+/* radial gold glow */
+.hero::after{
+  content:'';
+  position:absolute;
+  top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  width:800px;height:400px;
+  background:radial-gradient(ellipse, rgba(212,168,83,0.05) 0%, transparent 70%);
+  pointer-events:none;
+}
+.hero-top{
+  display:flex;align-items:flex-end;justify-content:space-between;
+  padding:8rem 3rem 2rem;
+  position:relative;z-index:1;
+  opacity:0;
+  animation:fadeUp 0.7s 0.2s ease forwards;
+}
+.hero-top-role{
+  font-family:var(--font-mono);
+  font-size:0.65rem;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:var(--white-dim);
+}
+.hero-top-location{
+  font-family:var(--font-mono);
+  font-size:0.62rem;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  color:var(--white-dim);
+  text-align:right;
+}
+.hero-top-location strong{color:var(--gold);font-weight:400}
+
+/* THE NAME — full-width typographic canvas */
+.hero-name{
+  position:relative;z-index:1;
+  padding:0 1.5rem;
+  line-height:0.88;
+  overflow:hidden;
+}
+.hero-name-line{
+  display:block;
+  font-family:var(--font-display);
+  font-size:clamp(4rem,14.2vw,16rem);
+  font-weight:900;
+  letter-spacing:-0.04em;
+  white-space:nowrap;
+  transform:translateY(120px);
+  opacity:0;
+}
+.hero-name-line.l1{
+  color:transparent;
+  -webkit-text-stroke:1.5px rgba(248,244,238,0.7);
+  animation:nameUp 1s 0.35s cubic-bezier(0.16,1,0.3,1) forwards;
+}
+.hero-name-line.l2{
+  color:var(--white);
+  animation:nameUp 1s 0.5s cubic-bezier(0.16,1,0.3,1) forwards;
+}
+@keyframes nameUp{to{transform:translateY(0);opacity:1}}
+
+/* horizontal gold rule between name lines */
+.hero-rule{
+  width:100%;height:1px;
+  background:linear-gradient(to right, transparent 0%, var(--gold) 20%, var(--gold) 80%, transparent 100%);
+  opacity:0;
+  animation:fadeIn 0.6s 0.9s ease forwards;
+}
+@keyframes fadeIn{to{opacity:0.4}}
+
+/* bottom strip with stats + bio */
+.hero-bottom{
+  display:grid;
+  grid-template-columns:auto 1fr auto;
+  align-items:center;
+  gap:4rem;
+  padding:2.5rem 3rem 4.5rem;
+  position:relative;z-index:1;
+  opacity:0;
+  animation:fadeUp 0.8s 0.8s ease forwards;
+}
+.hero-index{
+  font-family:var(--font-mono);
+  font-size:0.6rem;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:var(--white-dim);
+  writing-mode:vertical-rl;
+  transform:rotate(180deg);
+}
+.hero-desc{
+  font-size:0.9rem;
+  color:var(--white-dim);
+  line-height:1.85;
+  max-width:400px;
+}
+.hero-right-block{display:flex;flex-direction:column;align-items:flex-end;gap:1.75rem}
+.hero-stats{display:flex;gap:2.5rem}
+.hstat-num{
+  font-family:var(--font-display);
+  font-size:1.75rem;
+  font-weight:300;
+  color:var(--white);
+  line-height:1;
+}
+.hstat-label{
+  font-size:0.6rem;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  color:var(--white-dim);
+  margin-top:0.25rem;
+}
+.hero-ctas{display:flex;gap:0.75rem}
+.btn-primary{
+  padding:0.6rem 1.6rem;
+  background:var(--gold);
+  color:var(--black);
+  font-family:var(--font-mono);
+  font-size:0.62rem;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  font-weight:600;
+  transition:opacity 0.2s,transform 0.15s;
+}
+.btn-primary:hover{opacity:0.85;transform:translateY(-1px)}
+.btn-ghost{
+  padding:0.6rem 1.6rem;
+  border:1px solid var(--border);
+  color:var(--white-dim);
+  font-family:var(--font-mono);
+  font-size:0.62rem;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  transition:border-color 0.2s,color 0.2s;
+}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
+
+/* scroll indicator */
+.hero-scroll-pill{
+  position:absolute;
+  bottom:2rem;left:50%;
+  transform:translateX(-50%);
+  display:flex;align-items:center;gap:0.6rem;
+  font-family:var(--font-mono);
+  font-size:0.55rem;
+  letter-spacing:0.16em;
+  text-transform:uppercase;
+  color:var(--white-faint);
+  opacity:0;
+  animation:fadeUp 0.6s 1.4s ease forwards;
+  z-index:2;
+}
+.scroll-track{
+  width:32px;height:1px;
+  background:var(--border);
+  position:relative;overflow:hidden;
+}
+.scroll-thumb{
+  position:absolute;left:0;top:0;
+  width:12px;height:1px;
+  background:var(--gold);
+  animation:slideRight 2s 1.6s ease-in-out infinite;
+}
+@keyframes slideRight{0%{left:0;opacity:1}70%{left:calc(100% - 12px);opacity:1}100%{left:calc(100% - 12px);opacity:0}}
+
+@keyframes scrollLine{0%,100%{transform:scaleY(1);opacity:1}50%{transform:scaleY(0.3);opacity:0.4}}
+.hero-divider{display:none}
+
+/* ---- MARQUEE STRIP (mid-page) ---- */
+.strip{
+  background:var(--surface);
+  padding:1.2rem 0;
+  overflow:hidden;
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+}
+.strip-track{
+  display:flex;
+  white-space:nowrap;
+  animation:marquee 30s linear infinite;
+}
+.strip-track span{
+  font-family:var(--font-mono);
+  font-size:0.7rem;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  color:var(--white-dim);
+  padding:0 3rem;
+}
+.strip-track span.sep{color:var(--gold)}
+
+/* ---- SECTION BASE ---- */
+.section-wrap{padding:7rem 3rem}
+.s-tag{
+  display:flex;align-items:center;gap:0.75rem;
+  font-family:var(--font-mono);
+  font-size:0.65rem;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin-bottom:1.5rem;
+}
+.s-tag::before{content:'';display:inline-block;width:20px;height:1px;background:var(--gold)}
+.s-title{
+  font-family:var(--font-display);
+  font-size:clamp(2rem,5vw,4.5rem);
+  font-weight:300;
+  line-height:1.05;
+  letter-spacing:-0.03em;
+}
+
+/* ---- ABOUT ---- */
+#about{
+  background:var(--off-black);
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:0;
+}
+.about-left{
+  padding:7rem 4rem 7rem 3rem;
+  border-right:1px solid var(--border);
+}
+.about-right{padding:7rem 3rem 7rem 4rem}
+.about-photo{
+  width:100%;
+  aspect-ratio:4/3;
+  background:var(--surface);
+  margin-bottom:2.5rem;
+  position:relative;
+  overflow:hidden;
+}
+.about-photo::after{
+  content:'PRAMODINI';
+  position:absolute;
+  bottom:1.5rem;left:1.5rem;
+  font-family:var(--font-display);
+  font-size:0.6rem;
+  letter-spacing:0.2em;
+  color:rgba(248,244,238,0.3);
+}
+.about-photo-placeholder{
+  width:100%;height:100%;
+  background:linear-gradient(135deg,var(--surface) 0%,var(--border) 100%);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-display);
+  font-size:4rem;
+  font-weight:900;
+  color:rgba(248,244,238,0.06);
+  letter-spacing:-0.05em;
+}
+.about-bio{
+  font-size:1.05rem;
+  color:var(--white-dim);
+  line-height:1.85;
+  margin-bottom:1.5rem;
+}
+.about-bio strong{color:var(--white);font-weight:500}
+.about-highlight{
+  border-left:2px solid var(--gold);
+  padding:1.25rem 1.5rem;
+  margin:2.5rem 0;
+  background:var(--gold-dim);
+}
+.about-highlight p{
+  font-family:var(--font-display);
+  font-size:1rem;
+  font-weight:300;
+  line-height:1.6;
+  color:var(--gold-light);
+}
+.skills-block{margin-bottom:2.5rem}
+.skills-cat{
+  font-family:var(--font-mono);
+  font-size:0.6rem;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:var(--white-dim);
+  margin-bottom:0.85rem;
+  padding-bottom:0.5rem;
+  border-bottom:1px solid var(--border);
+}
+.skill-pills{display:flex;flex-wrap:wrap;gap:0.5rem}
+.pill{
+  padding:0.3rem 0.85rem;
+  border:1px solid var(--border);
+  font-size:0.78rem;
+  color:var(--white-dim);
+  letter-spacing:0.02em;
+  transition:border-color 0.2s,color 0.2s;
+}
+.pill:hover{border-color:var(--gold);color:var(--gold)}
+.pill.ai{border-color:rgba(212,168,83,0.4);color:var(--gold);background:var(--gold-dim)}
+
+/* ---- PROJECTS ---- */
+#projects{background:var(--black);padding:7rem 3rem}
+.projects-header{
+  display:flex;align-items:flex-end;justify-content:space-between;
+  margin-bottom:5rem;
+  gap:2rem;
+}
+.projects-count{
+  font-family:var(--font-display);
+  font-size:0.7rem;
+  letter-spacing:0.08em;
+  color:var(--white-dim);
+}
+.proj-list{display:flex;flex-direction:column;gap:0}
+.proj-item{
+  display:grid;
+  grid-template-columns:auto 1fr auto;
+  align-items:center;
+  gap:2.5rem;
+  padding:2.5rem 0;
+  border-top:1px solid var(--border);
+  transition:border-color 0.3s;
+  position:relative;
+  cursor:none;
+  text-decoration:none;
+  color:inherit;
+}
+.proj-item:last-child{border-bottom:1px solid var(--border)}
+.proj-item::after{
+  content:'';
+  position:absolute;
+  left:0;right:0;bottom:0;top:0;
+  background:var(--gold-dim);
+  opacity:0;
+  transition:opacity 0.3s;
+  pointer-events:none;
+}
+.proj-item:hover::after{opacity:1}
+.proj-item:hover{border-color:var(--gold)}
+.proj-item:hover .proj-num{color:var(--gold)}
+.proj-item:hover .proj-name{color:var(--gold-light)}
+.proj-item:hover .proj-arrow{transform:translate(0,0);opacity:1}
+.proj-num{
+  font-family:var(--font-display);
+  font-size:0.7rem;
+  letter-spacing:0.1em;
+  color:var(--white-faint);
+  min-width:40px;
+  transition:color 0.3s;
+  position:relative;z-index:1;
+}
+.proj-center{position:relative;z-index:1}
+.proj-name{
+  font-family:var(--font-display);
+  font-size:clamp(1.4rem,3vw,2.2rem);
+  font-weight:300;
+  letter-spacing:-0.02em;
+  line-height:1.1;
+  margin-bottom:0.5rem;
+  transition:color 0.3s;
+}
+.proj-meta{
+  display:flex;gap:1.5rem;align-items:center;
+}
+.proj-tag{
+  font-family:var(--font-mono);
+  font-size:0.62rem;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  padding:0.2rem 0.7rem;
+  border:1px solid var(--border);
+  color:var(--white-dim);
+}
+.proj-impact{
+  font-family:var(--font-mono);
+  font-size:0.65rem;
+  letter-spacing:0.08em;
+  color:var(--gold);
+}
+.proj-right{
+  display:flex;flex-direction:column;align-items:flex-end;gap:0.5rem;
+  position:relative;z-index:1;
+}
+.proj-year{
+  font-family:var(--font-display);
+  font-size:0.7rem;
+  color:var(--white-faint);
+  letter-spacing:0.06em;
+}
+.proj-arrow{
+  font-size:1.5rem;
+  color:var(--gold);
+  transform:translate(-8px,8px);
+  opacity:0;
+  transition:transform 0.3s, opacity 0.3s;
+}
+
+/* Featured project */
+.proj-featured{
+  margin:4rem 0;
+  background:var(--surface);
+  border:1px solid var(--border);
+  padding:3.5rem;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:3rem;
+  align-items:center;
+  position:relative;
+  overflow:hidden;
+}
+.proj-featured::before{
+  content:'FEATURED';
+  position:absolute;
+  top:2rem;right:2rem;
+  font-family:var(--font-mono);
+  font-size:0.55rem;
+  letter-spacing:0.16em;
+  color:var(--gold);
+  padding:0.3rem 0.8rem;
+  border:1px solid rgba(212,168,83,0.3);
+}
+.proj-featured-bg{
+  position:absolute;
+  top:-100px;right:-100px;
+  width:400px;height:400px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(212,168,83,0.06) 0%,transparent 70%);
+  pointer-events:none;
+}
+.feat-tag{
+  font-family:var(--font-mono);
+  font-size:0.6rem;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin-bottom:1rem;
+}
+.feat-title{
+  font-family:var(--font-display);
+  font-size:clamp(1.8rem,3.5vw,3rem);
+  font-weight:300;
+  line-height:1.1;
+  letter-spacing:-0.02em;
+  margin-bottom:1rem;
+}
+.feat-desc{
+  font-size:0.9rem;
+  color:var(--white-dim);
+  line-height:1.8;
+  margin-bottom:2rem;
+}
+.feat-metrics{display:flex;gap:3rem}
+.fmet-val{
+  font-family:var(--font-display);
+  font-size:2.5rem;
+  font-weight:200;
+  color:var(--gold-light);
+  line-height:1;
+}
+.fmet-lbl{
+  font-family:var(--font-mono);
+  font-size:0.6rem;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:var(--white-dim);
+  margin-top:0.3rem;
+}
+.feat-visual{
+  background:var(--dark);
+  border:1px solid var(--border);
+  aspect-ratio:4/3;
+  display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
+}
+.feat-visual-inner{
+  text-align:center;
+}
+.feat-visual-num{
+  font-family:var(--font-display);
+  font-size:5rem;
+  font-weight:900;
+  color:rgba(212,168,83,0.12);
+  line-height:1;
+}
+.feat-visual-lbl{
+  font-family:var(--font-mono);
+  font-size:0.6rem;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  color:rgba(248,244,238,0.18);
+}
+.feat-visual::after{
+  content:'';
+  position:absolute;inset:0;
+  background:repeating-linear-gradient(0deg,transparent,transparent 24px,rgba(248,244,238,0.02) 24px,rgba(248,244,238,0.02) 25px);
+}
+
+/* ---- RESUME ---- */
+#resume{background:var(--off-black)}
+.resume-inner{
+  display:grid;
+  grid-template-columns:300px 1fr;
+  gap:0;
+  border-top:1px solid var(--border);
+}
+.resume-sidebar{
+  border-right:1px solid var(--border);
+  padding:4rem 2.5rem;
+  position:sticky;
+  top:80px;
+  align-self:start;
+}
+.resume-main{padding:4rem 4rem}
+.res-section{margin-bottom:4rem}
+.res-section-title{
+  font-family:var(--font-mono);
+  font-size:0.6rem;
+  letter-spacing:0.16em;
+  text-transform:uppercase;
+  color:var(--white-dim);
+  margin-bottom:1.5rem;
+  padding-bottom:0.75rem;
+  border-bottom:1px solid var(--border);
+}
+.edu-card{margin-bottom:1.5rem}
+.edu-degree{font-size:0.9rem;font-weight:500;color:var(--white);margin-bottom:0.2rem}
+.edu-inst{font-size:0.8rem;color:var(--white-dim)}
+.edu-year{font-family:var(--font-mono);font-size:0.65rem;color:var(--gold);margin-top:0.2rem}
+.contact-list{display:flex;flex-direction:column;gap:0.75rem}
+.contact-item{font-size:0.82rem;color:var(--white-dim);display:flex;align-items:center;gap:0.5rem}
+.contact-item a{color:var(--gold);transition:opacity 0.2s}
+.contact-item a:hover{opacity:0.7}
+
+/* Timeline */
+.timeline-item{
+  display:grid;
+  grid-template-columns:12px 1fr;
+  gap:1.5rem;
+  padding-bottom:3.5rem;
+  position:relative;
+}
+.tl-dot-col{display:flex;flex-direction:column;align-items:center;padding-top:0.35rem}
+.tl-dot{
+  width:12px;height:12px;
+  border-radius:50%;
+  border:2px solid var(--gold);
+  background:var(--black);
+  flex-shrink:0;
+  position:relative;z-index:1;
+}
+.tl-line{
+  flex:1;width:1px;
+  background:linear-gradient(to bottom,var(--gold),var(--border));
+  margin-top:0.4rem;
+}
+.timeline-item:last-child .tl-line{display:none}
+.tl-header{margin-bottom:0.75rem}
+.tl-role{font-size:1rem;font-weight:500;color:var(--white);line-height:1.3;margin-bottom:0.2rem}
+.tl-company{font-size:0.85rem;color:var(--gold);margin-bottom:0.2rem}
+.tl-period{
+  font-family:var(--font-mono);
+  font-size:0.65rem;
+  letter-spacing:0.06em;
+  color:var(--white-dim);
+}
+.tl-bullets{list-style:none;padding:0}
+.tl-bullets li{
+  font-size:0.875rem;
+  color:var(--white-dim);
+  line-height:1.7;
+  padding-left:1rem;
+  position:relative;
+  margin-bottom:0.4rem;
+}
+.tl-bullets li::before{
+  content:'→';
+  position:absolute;left:0;
+  color:var(--border);
+  font-size:0.75rem;
+  top:0.15rem;
+}
+
+/* ---- CONTACT ---- */
+#contact{
+  background:var(--black);
+  padding:8rem 3rem;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+#contact::before{
+  content:'';
+  position:absolute;
+  top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  width:600px;height:600px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(212,168,83,0.07) 0%,transparent 70%);
+}
+.contact-big{
+  font-family:var(--font-display);
+  font-size:clamp(2.5rem,8vw,7rem);
+  font-weight:200;
+  letter-spacing:-0.04em;
+  line-height:1.05;
+  margin-bottom:1.5rem;
+  position:relative;z-index:1;
+}
+.contact-big em{font-style:italic;color:var(--gold)}
+.contact-sub{
+  font-size:0.9rem;
+  color:var(--white-dim);
+  margin-bottom:3.5rem;
+  position:relative;z-index:1;
+}
+.contact-links{
+  display:flex;justify-content:center;gap:1.5rem;flex-wrap:wrap;
+  margin-bottom:5rem;
+  position:relative;z-index:1;
+}
+.clink{
+  display:flex;align-items:center;gap:0.6rem;
+  padding:0.75rem 1.75rem;
+  border:1px solid var(--border);
+  font-family:var(--font-mono);
+  font-size:0.7rem;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:var(--white-dim);
+  transition:border-color 0.2s,color 0.2s,background 0.2s;
+}
+.clink:hover{border-color:var(--gold);color:var(--gold);background:var(--gold-dim)}
+.clink.primary{border-color:var(--gold);color:var(--gold)}
+.clink.primary:hover{background:var(--gold);color:var(--black)}
+.footer-note{
+  font-family:var(--font-mono);
+  font-size:0.6rem;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:rgba(248,244,238,0.18);
+  position:relative;z-index:1;
+}
+
+/* ---- NOISE OVERLAY ---- */
+.noise{
+  position:fixed;inset:0;z-index:9000;
+  pointer-events:none;
+  opacity:0.025;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+}
+
+/* ---- REVEAL ANIMATIONS ---- */
+.reveal{
+  opacity:0;
+  transform:translateY(30px);
+  transition:opacity 0.7s ease, transform 0.7s cubic-bezier(0.16,1,0.3,1);
+}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-delay-1{transition-delay:0.1s}
+.reveal-delay-2{transition-delay:0.2s}
+.reveal-delay-3{transition-delay:0.3s}
+
+/* ---- ANIMATIONS ---- */
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+/* ---- RESPONSIVE ---- */
+@media(max-width:900px){
+  nav{padding:1rem 1.5rem}
+  .nav-links{display:none}
+  .hero{padding:0 1.5rem 3rem}
+  .hero-stats{gap:1.5rem}
+  #about{grid-template-columns:1fr}
+  .about-left{border-right:none;border-bottom:1px solid var(--border);padding:4rem 1.5rem}
+  .about-right{padding:4rem 1.5rem}
+  .section-wrap{padding:4rem 1.5rem}
+  .proj-featured{grid-template-columns:1fr}
+  .resume-inner{grid-template-columns:1fr}
+  .resume-sidebar{position:static;border-right:none;border-bottom:1px solid var(--border)}
+  .resume-main{padding:3rem 1.5rem}
+  #projects{padding:4rem 1.5rem}
+  #contact{padding:5rem 1.5rem}
+}
+</style>
+</head>
+<body>
+
+<!-- NOISE TEXTURE -->
+<div class="noise"></div>
+
+<!-- CURSOR -->
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <div class="nav-left">
+    <div class="nav-avail">
+      <div class="nav-avail-dot"></div>
+      Open to work
+    </div>
+  </div>
+  <a href="#home" class="nav-wordmark">Pramodini<span>.</span></a>
+  <ul class="nav-right">
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Work</a></li>
+    <li><a href="#resume">Resume</a></li>
+    <li><a href="#contact" class="nav-cta-link">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+
+  <!-- TOP META ROW -->
+  <div class="hero-top">
+    <div class="hero-top-role">Senior UI/UX Designer &nbsp;/&nbsp; Product Strategist &nbsp;/&nbsp; Design Systems</div>
+    <div class="hero-top-location">Nürnberg, Germany &nbsp;·&nbsp; <strong>2026</strong></div>
+  </div>
+
+  <!-- FULL-WIDTH NAME -->
+  <div class="hero-name">
+    <span class="hero-name-line l1">PRAMODINI</span>
+    <div class="hero-rule"></div>
+    <span class="hero-name-line l2">SUBRAMANYA</span>
+  </div>
+
+  <!-- BOTTOM: bio + stats + CTAs -->
+  <div class="hero-bottom">
+    <div class="hero-index">Product · Fintech · AI · 2026</div>
+    <p class="hero-desc">
+      7+ years designing fintech products, scalable design systems, and AI-augmented workflows. I don't just design screens — I design outcomes tied to metrics.
+    </p>
+    <div class="hero-right-block">
+      <div class="hero-stats">
+        <div class="hstat">
+          <div class="hstat-num">€400K+</div>
+          <div class="hstat-label">Revenue</div>
+        </div>
+        <div class="hstat">
+          <div class="hstat-num">70K+</div>
+          <div class="hstat-label">Subscribers</div>
+        </div>
+        <div class="hstat">
+          <div class="hstat-num">50%</div>
+          <div class="hstat-label">Activation lift</div>
+        </div>
+      </div>
+      <div class="hero-ctas">
+        <a href="#projects" class="btn-primary">View work</a>
+        <a href="#contact" class="btn-ghost">Get in touch</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCROLL INDICATOR -->
+  <div class="hero-scroll-pill">
+    <div class="scroll-track"><div class="scroll-thumb"></div></div>
+    Scroll to explore
+  </div>
+
+</section>
+
+<!-- MID STRIP -->
+<div class="strip">
+  <div class="strip-track">
+    <span>User Research</span><span class="sep">✦</span>
+    <span>Design Systems</span><span class="sep">✦</span>
+    <span>Fintech UX</span><span class="sep">✦</span>
+    <span>AI-Augmented Workflows</span><span class="sep">✦</span>
+    <span>Mobile-First Design</span><span class="sep">✦</span>
+    <span>WCAG Accessibility</span><span class="sep">✦</span>
+    <span>Prototyping</span><span class="sep">✦</span>
+    <span>Stakeholder Alignment</span><span class="sep">✦</span>
+    <span>Component Libraries</span><span class="sep">✦</span>
+    <span>User Research</span><span class="sep">✦</span>
+    <span>Design Systems</span><span class="sep">✦</span>
+    <span>Fintech UX</span><span class="sep">✦</span>
+    <span>AI-Augmented Workflows</span><span class="sep">✦</span>
+    <span>Mobile-First Design</span><span class="sep">✦</span>
+    <span>WCAG Accessibility</span><span class="sep">✦</span>
+    <span>Prototyping</span><span class="sep">✦</span>
+    <span>Stakeholder Alignment</span><span class="sep">✦</span>
+    <span>Component Libraries</span><span class="sep">✦</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-left">
+    <div class="about-photo reveal">
+      <div class="about-photo-placeholder">PS</div>
+    </div>
+    <div class="s-tag reveal">About me</div>
+    <h2 class="s-title reveal" style="margin-bottom:2rem">Designer who<br>ships impact.</h2>
+    <p class="about-bio reveal">
+      I'm a Senior UI/UX Designer specialising in <strong>fintech, design systems, and AI-driven UX</strong>. For the past 3+ years at bonify (SCHUFA Group), I've led product design that's generated €400K+ in revenue and driven 70K+ subscribers.
+    </p>
+    <p class="about-bio reveal">
+      My process is grounded in <strong>research-first thinking</strong> — I map user friction, design with data, and collaborate deeply with engineers, PMs, and business stakeholders to ensure designs survive contact with reality.
+    </p>
+    <div class="about-highlight reveal">
+      <p>"I don't just design screens — I design outcomes. Every pixel has a purpose tied to a metric."</p>
+    </div>
+    <p class="about-bio reveal">
+      Recently I've expanded into <strong>AI-augmented design workflows</strong>, using Figma Make, Claude, ChatGPT, and Lovable to accelerate discovery, prototyping, and iteration. Based in Nürnberg, Germany — open to Berlin, remote, or relocation.
+    </p>
+  </div>
+  <div class="about-right">
+    <div class="s-tag reveal">Skills &amp; tools</div>
+    <div class="skills-block reveal">
+      <div class="skills-cat">UX Research</div>
+      <div class="skill-pills">
+        <span class="pill">User interviews</span>
+        <span class="pill">Usability testing</span>
+        <span class="pill">Friction mapping</span>
+        <span class="pill">Competitive analysis</span>
+        <span class="pill">Journey mapping</span>
+        <span class="pill">Personas</span>
+      </div>
+    </div>
+    <div class="skills-block reveal reveal-delay-1">
+      <div class="skills-cat">UX &amp; UI Design</div>
+      <div class="skill-pills">
+        <span class="pill">Design systems</span>
+        <span class="pill">Component libraries</span>
+        <span class="pill">Information architecture</span>
+        <span class="pill">Wireframing</span>
+        <span class="pill">Prototyping</span>
+        <span class="pill">Mobile-first UX</span>
+        <span class="pill">WCAG accessibility</span>
+        <span class="pill">Responsive layouts</span>
+        <span class="pill">Typography</span>
+      </div>
+    </div>
+    <div class="skills-block reveal reveal-delay-2">
+      <div class="skills-cat">AI Tools (active user)</div>
+      <div class="skill-pills">
+        <span class="pill ai">Figma Make</span>
+        <span class="pill ai">Claude</span>
+        <span class="pill ai">ChatGPT</span>
+        <span class="pill ai">Google Stitch</span>
+        <span class="pill ai">Lovable</span>
+        <span class="pill ai">Perplexity</span>
+      </div>
+    </div>
+    <div class="skills-block reveal reveal-delay-3">
+      <div class="skills-cat">Design Tools</div>
+      <div class="skill-pills">
+        <span class="pill">Figma</span>
+        <span class="pill">Framer</span>
+        <span class="pill">Sketch</span>
+        <span class="pill">InVision</span>
+        <span class="pill">Adobe XD</span>
+        <span class="pill">After Effects</span>
+        <span class="pill">Illustrator</span>
+        <span class="pill">HTML &amp; CSS</span>
+        <span class="pill">Jira</span>
+      </div>
+    </div>
+    <div class="skills-block reveal" style="margin-top:2.5rem">
+      <div class="skills-cat">Languages</div>
+      <div style="display:flex;flex-direction:column;gap:1rem">
+        <div>
+          <div style="display:flex;justify-content:space-between;font-size:0.82rem;color:var(--white);margin-bottom:0.5rem">
+            <span>English</span><span style="color:var(--white-dim);font-family:var(--font-mono);font-size:0.65rem">Professional</span>
+          </div>
+          <div style="height:2px;background:var(--border)"><div style="height:2px;background:var(--gold);width:95%"></div></div>
+        </div>
+        <div>
+          <div style="display:flex;justify-content:space-between;font-size:0.82rem;color:var(--white);margin-bottom:0.5rem">
+            <span>German</span><span style="color:var(--white-dim);font-family:var(--font-mono);font-size:0.65rem">A2 — Learning</span>
+          </div>
+          <div style="height:2px;background:var(--border)"><div style="height:2px;background:var(--gold);width:25%"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="projects-header">
+    <div>
+      <div class="s-tag reveal">Selected work</div>
+      <h2 class="s-title reveal">Projects that<br><em style="font-style:italic;color:var(--gold);font-weight:200">moved the needle</em></h2>
+    </div>
+    <div class="projects-count reveal">06 Projects</div>
+  </div>
+
+  <!-- FEATURED -->
+  <div class="proj-featured reveal">
+    <div class="proj-featured-bg"></div>
+    <div>
+      <div class="feat-tag">✦ Featured · Case Study 01</div>
+      <h3 class="feat-title">bonify Premium<br>Subscription</h3>
+      <p class="feat-desc">
+        End-to-end ownership of bonify's core subscription product — from zero to launch. Defined user flows, built scalable components, aligned stakeholders, and shipped a product that communicates financial value to skeptical users while converting them.
+      </p>
+      <div class="feat-metrics">
+        <div>
+          <div class="fmet-val">€400K+</div>
+          <div class="fmet-lbl">Revenue generated</div>
+        </div>
+        <div>
+          <div class="fmet-val">70K+</div>
+          <div class="fmet-lbl">New subscribers</div>
+        </div>
+      </div>
+      <p style="font-size:0.75rem;color:var(--white-dim);margin-top:1.5rem;font-family:var(--font-mono);letter-spacing:0.04em">
+        ROLE: Research → IA → UI → Design system → Handoff
+      </p>
+    </div>
+    <div class="feat-visual">
+      <div class="feat-visual-inner">
+        <div class="feat-visual-num">€400K</div>
+        <div class="feat-visual-lbl">Revenue driven by design</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LIST -->
+  <div class="proj-list">
+    <a class="proj-item reveal" href="#">
+      <div class="proj-num">02</div>
+      <div class="proj-center">
+        <div class="proj-name">SCHUFA Score History</div>
+        <div class="proj-meta">
+          <span class="proj-tag">Fintech · Feature</span>
+          <span class="proj-impact">✦ 60K users in month 1</span>
+        </div>
+      </div>
+      <div class="proj-right">
+        <span class="proj-year">2023</span>
+        <span class="proj-arrow">↗</span>
+      </div>
+    </a>
+    <a class="proj-item reveal reveal-delay-1" href="#">
+      <div class="proj-num">03</div>
+      <div class="proj-center">
+        <div class="proj-name">Step-Up Identification Flow</div>
+        <div class="proj-meta">
+          <span class="proj-tag">Verification UX</span>
+          <span class="proj-impact">✦ +50% R5 Activation</span>
+        </div>
+      </div>
+      <div class="proj-right">
+        <span class="proj-year">2023</span>
+        <span class="proj-arrow">↗</span>
+      </div>
+    </a>
+    <a class="proj-item reveal reveal-delay-2" href="#">
+      <div class="proj-num">04</div>
+      <div class="proj-center">
+        <div class="proj-name">Barbeque Nation App Redesign</div>
+        <div class="proj-meta">
+          <span class="proj-tag">Mobile · Restaurant</span>
+          <span class="proj-impact">✦ −20% time-to-checkout · +12% orders</span>
+        </div>
+      </div>
+      <div class="proj-right">
+        <span class="proj-year">2021</span>
+        <span class="proj-arrow">↗</span>
+      </div>
+    </a>
+    <a class="proj-item reveal reveal-delay-3" href="#">
+      <div class="proj-num">05</div>
+      <div class="proj-center">
+        <div class="proj-name">SaaS Analytics Dashboard</div>
+        <div class="proj-meta">
+          <span class="proj-tag">SaaS · Analytics</span>
+          <span class="proj-impact">✦ −30% task time · −40% design time</span>
+        </div>
+      </div>
+      <div class="proj-right">
+        <span class="proj-year">2022</span>
+        <span class="proj-arrow">↗</span>
+      </div>
+    </a>
+    <a class="proj-item reveal" href="#">
+      <div class="proj-num">06</div>
+      <div class="proj-center">
+        <div class="proj-name">Tripedeo &amp; Cybervie Consulting</div>
+        <div class="proj-meta">
+          <span class="proj-tag">Consulting · UX Audit</span>
+          <span class="proj-impact">✦ +18% revenue · −22% drop-off</span>
+        </div>
+      </div>
+      <div class="proj-right">
+        <span class="proj-year">2020</span>
+        <span class="proj-arrow">↗</span>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- RESUME / EXPERIENCE -->
+<section id="resume" style="padding:7rem 3rem 0">
+  <div class="s-tag reveal">Resume</div>
+  <h2 class="s-title reveal" style="margin-bottom:3rem">Experience &amp;<br>background</h2>
+  <div class="resume-inner">
+    <div class="resume-sidebar reveal">
+      <div class="res-section">
+        <div class="res-section-title">Education</div>
+        <div class="edu-card">
+          <div class="edu-degree">AI for UX Design</div>
+          <div class="edu-inst">Designlab</div>
+          <div class="edu-year">2026</div>
+        </div>
+        <div class="edu-card">
+          <div class="edu-degree">Google UX Design Certificate</div>
+          <div class="edu-inst">Udemy</div>
+          <div class="edu-year">2020</div>
+        </div>
+        <div class="edu-card">
+          <div class="edu-degree">UI/UX Design Diploma</div>
+          <div class="edu-inst">DesignBoat School</div>
+          <div class="edu-year">2019</div>
+        </div>
+        <div class="edu-card">
+          <div class="edu-degree">Bachelor of Engineering</div>
+          <div class="edu-inst">Visvesvaraya Technological University</div>
+          <div class="edu-year">2015 — 2019</div>
+        </div>
+      </div>
+      <div class="res-section">
+        <div class="res-section-title">Contact</div>
+        <div class="contact-list">
+          <div class="contact-item">
+            <span>✉</span>
+            <a href="mailto:pramodinius@gmail.com">pramodinius@gmail.com</a>
+          </div>
+          <div class="contact-item">
+            <span>☎</span>
+            <span>+49 176 20752628</span>
+          </div>
+          <div class="contact-item">
+            <span>◎</span>
+            <span>Nürnberg, Germany</span>
+          </div>
+          <div class="contact-item">
+            <span>⊕</span>
+            <a href="https://pramodinisubramanya.com">pramodinisubramanya.com</a>
+          </div>
+        </div>
+      </div>
+      <a href="#contact" class="nav-cta" style="display:inline-block;margin-top:1.5rem">Download CV →</a>
+    </div>
+
+    <div class="resume-main">
+      <div class="res-section-title">Work experience</div>
+      <div style="padding-top:1.5rem">
+        <div class="timeline-item reveal">
+          <div class="tl-dot-col"><div class="tl-dot"></div><div class="tl-line"></div></div>
+          <div>
+            <div class="tl-header">
+              <div class="tl-role">Associate Lead UI/UX Designer</div>
+              <div class="tl-company">bonify (SCHUFA Group)</div>
+              <div class="tl-period">May 2022 — Present · Berlin</div>
+            </div>
+            <ul class="tl-bullets">
+              <li>Led end-to-end design of subscription product — 70K+ subscribers, ~€400K revenue</li>
+              <li>Designed &amp; launched SCHUFA Score History — 60K+ users in month 1, drove subscription uplift</li>
+              <li>Delivered BriefIdent (Step-Up ID) flow — increased R5 user activation by ~50%</li>
+              <li>Integrated AI workflows (Figma Make, Claude, ChatGPT) to accelerate design iteration by 40%</li>
+            </ul>
+          </div>
+        </div>
+        <div class="timeline-item reveal">
+          <div class="tl-dot-col"><div class="tl-dot"></div><div class="tl-line"></div></div>
+          <div>
+            <div class="tl-header">
+              <div class="tl-role">Senior UI/UX Designer — Founding Team</div>
+              <div class="tl-company">Cumulations</div>
+              <div class="tl-period">Apr 2021 — Apr 2022 · Remote</div>
+            </div>
+            <ul class="tl-bullets">
+              <li>Led Barbeque Nation mobile app redesign — 20% faster checkout, +12% order completion</li>
+              <li>Redesigned US SaaS analytics dashboards — 30% reduction in task completion time</li>
+              <li>Built Figma component library — reduced design time for new features by 40%</li>
+              <li>Awarded Best Employee for production-ready designs and reduced implementation rework</li>
+            </ul>
+          </div>
+        </div>
+        <div class="timeline-item reveal">
+          <div class="tl-dot-col"><div class="tl-dot"></div><div class="tl-line"></div></div>
+          <div>
+            <div class="tl-header">
+              <div class="tl-role">Design Consultant</div>
+              <div class="tl-company">Tripedeo &amp; Cybervie</div>
+              <div class="tl-period">Dec 2020 — Mar 2021 · Remote</div>
+            </div>
+            <ul class="tl-bullets">
+              <li>Refactored checkout &amp; pricing for Tripedeo — improved conversion, +18% revenue</li>
+              <li>Restructured onboarding for Cybervie — reduced week-1 drop-off by 22%</li>
+            </ul>
+          </div>
+        </div>
+        <div class="timeline-item reveal">
+          <div class="tl-dot-col"><div class="tl-dot"></div></div>
+          <div>
+            <div class="tl-header">
+              <div class="tl-role">UI/UX Designer</div>
+              <div class="tl-company">Happymonk.ai</div>
+              <div class="tl-period">Jun 2019 — Nov 2020 · India</div>
+            </div>
+            <ul class="tl-bullets">
+              <li>Redesigned web &amp; mobile interfaces — +25% task success rate, +15% homepage engagement</li>
+              <li>Ran usability tests and implemented iterative improvements with engineering team</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="s-tag reveal" style="justify-content:center">Let's build something</div>
+  <h2 class="contact-big reveal">
+    Let's work<br><em>together</em>
+  </h2>
+  <p class="contact-sub reveal">
+    Open to senior product design roles · Berlin, remote, or relocation · Nürnberg, Germany
+  </p>
+  <div class="contact-links reveal">
+    <a href="mailto:pramodinius@gmail.com" class="clink primary">✉ pramodinius@gmail.com</a>
+    <a href="https://pramodinisubramanya.com" class="clink">⊕ pramodinisubramanya.com</a>
+    <a href="https://linkedin.com" class="clink">in LinkedIn</a>
+    <a href="#" class="clink">⬡ Behance</a>
+  </div>
+  <p class="footer-note reveal">© 2026 Pramodini Subramanya · Built with intention · All rights reserved</p>
+</section>
+
+<script>
+// CURSOR
+const cursor=document.getElementById('cursor');
+const ring=document.getElementById('cursor-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{
+  mx=e.clientX;my=e.clientY;
+  cursor.style.left=mx+'px';cursor.style.top=my+'px';
+});
+(function animRing(){
+  rx+=(mx-rx)*0.12;
+  ry+=(my-ry)*0.12;
+  ring.style.left=rx+'px';ring.style.top=ry+'px';
+  requestAnimationFrame(animRing);
+})();
+
+// SCROLL REVEAL
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){e.target.classList.add('visible')}
+  });
+},{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+
+// NAV scroll class
+const nav=document.getElementById('mainNav');
+window.addEventListener('scroll',()=>{
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+});
+</script>
+</body>
+</html>
